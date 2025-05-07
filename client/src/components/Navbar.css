@@ -1,0 +1,146 @@
+/* Default Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    padding: 10px 20px;
+    color: #fff;
+    position: relative;
+  }
+  
+  .navbar-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    flex-grow: 1;  /* Ensures the title takes up available space */
+  }
+  
+  /* Navbar Links */
+  .nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .nav-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    background-color: #555;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    background-color: #f44336;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+  }
+  
+  /* Logout Button Styles */
+  .logout-btn {
+    background-color: #f44336;
+    border: none;
+    padding: 8px 12px;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-btn:hover {
+    background-color: #d32f2f;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+  }
+  
+  /* Hamburger Menu Styles */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+    z-index: 3;
+  }
+  
+  .hamburger .bar {
+    display: block;
+    width: 30px;
+    height: 4px;
+   
+    border-radius: 2px;
+    transition: transform 0.3s ease;
+  }
+  
+  .hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+  
+  /* Mobile View Styles */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: row;  /* Ensure navbar stays in a row */
+      padding: 10px;
+      justify-content: space-between; /* Maintain space between elements */
+    }
+  
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 2;
+    }
+  
+    .nav-links.open {
+      display: flex;
+    }
+  
+    .nav-link {
+      padding: 16px 24px;
+      font-size: 18px;
+      text-align: center;
+      background-color: transparent;
+      color: white;
+      border: none;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+  
+    .nav-link:hover {
+      background-color: #f44336;
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(244, 67, 54, 0.3);
+    }
+  
+    .logout-btn {
+      padding: 10px 20px;
+      width: 80%;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  }
+  

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Support and Admin Operations</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            margin: 20px;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-primary {
+            background-color: #008CBA;
+        }
+
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        #admin-section {
+            display: none;
+        }
+
+        .task-item {
+            margin-bottom: 10px;
+        }
+
+        .task-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Support and Admin Operations</h1>
+
+        <!-- User Login Section -->
+        <div class="form-section" id="user-login-section">
+            <h2>User Login</h2>
+            <input type="email" id="login-email" placeholder="Email">
+            <input type="password" id="login-password" placeholder="Password">
+            <button class="btn" id="login-btn">Login</button>
+        </div>
+
+        <!-- User Section (Visible after Login) -->
+        <div id="user-section" style="display:none;">
+            <h2>Welcome, <span id="user-name"></span></h2>
+            <button class="btn" id="logout-btn">Logout</button>
+
+            <!-- Task Operations -->
+            <h3>Create Task</h3>
+            <input type="text" id="task-title" placeholder="Task Title">
+            <textarea id="task-description" placeholder="Task Description"></textarea>
+            <select id="task-status">
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <button class="btn" id="create-task-btn">Create Task</button>
+
+            <h3>Your Tasks</h3>
+            <button class="btn" id="fetch-user-tasks-btn">Fetch My Tasks</button>
+            <div id="user-tasks"></div>
+        </div>
+
+        <!-- Admin Section (Visible only if admin) -->
+        <div id="admin-section">
+            <h3>Admin Operations</h3>
+
+            <!-- User Management -->
+            <h4>Manage Users</h4>
+            <input type="email" id="admin-user-email" placeholder="User Email">
+            <button class="btn" id="fetch-users-btn">Fetch All Users</button>
+            <div id="user-management"></div>
+
+            <!-- Task Management -->
+            <h4>Manage Tasks</h4>
+            <button class="btn" id="fetch-all-tasks-btn">Fetch All Tasks</button>
+            <div id="task-management"></div>
+        </div>
+
+        <!-- Response Display -->
+        <div class="response" id="response"></div>
+    </div>
+
+    <script>
+        const apiUrl = 'http://localhost:5000/api';
+        let authToken = '';
+        let isAdmin = false;
+
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const res = await fetch(`${apiUrl}/auth/login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await res.json();
+
+            if (data.token) {
+                authToken = data.token;
+                isAdmin = data.isAdmin;
+                displayResponse(data);
+                showUserSection(data);
+            } else {
+                displayResponse(data);
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            authToken = '';
+            isAdmin = false;
+            document.getElementById('user-section').style.display = 'none';
+            document.getElementById('user-login-section').style.display = 'block';
+            document.getElementById('admin-section').style.display = 'none';
+            displayResponse({ message: 'Logged out successfully!' });
+        });
+
+        function showUserSection(userData) {
+            document.getElementById('user-name').innerText = userData.name;
+            document.getElementById('user-login-section').style.display = 'none';
+            document.getElementById('user-section').style.display = 'block';
+            document.getElementById('admin-section').style.display = isAdmin ? 'block' : 'none';
+        }
+
+        document.getElementById('create-task-btn').addEventListener('click', async () => {
+            const title = document.getElementById('task-title').value;
+            const description = document.getElementById('task-description').value;
+            const status = document.getElementById('task-status').value;
+
+            const res = await fetch(`${apiUrl}/tasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({ title, description, status }),
+            });
+            const data = await res.json();
+            displayResponse(data);
+        });
+
+        document.getElementById('fetch-user-tasks-btn').addEventListener('click', async () => {
+            const res = await fetch(`${apiUrl}/tasks`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${authToken}` },
+            });
+            const data = await res.json();
+
+            document.getElementById('user-tasks').innerHTML = data.map(task =>
+                `<div class="task-item">
+                    <div>Task ID: ${task._id} - ${task.title} - ${task.status}</div>
+                    <button class="btn-primary" onclick="getTaskById('${task._id}')">View</button>
+                    <button class="btn-primary" onclick="updateTask('${task._id}')">Update</button>
+                    <button class="btn-danger" onclick="deleteTask('${task._id}')">Delete</button>
+                </div>`
+            ).join('');
+        });
+
+        async function getTaskById(taskId) {
+            const res = await fetch(`${apiUrl}/tasks/${taskId}`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${authToken}` },
+            });
+            const data = await res.json();
+            displayResponse(data);
+        }
+
+        async function updateTask(taskId) {
+            const newTitle = prompt('Enter new title:');
+            const newDescription = prompt('Enter new description:');
+            const newStatus = prompt('Enter new status (Pending/Completed):');
+
+            const res = await fetch(`${apiUrl}/tasks/${taskId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({ title: newTitle, description: newDescription, status: newStatus }),
+            });
+            const data = await res.json();
+            displayResponse(data);
+        }
+
+        async function deleteTask(taskId) {
+            const res = await fetch(`${apiUrl}/tasks/${taskId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${authToken}` },
+            });
+            const data = await res.json();
+            displayResponse(data);
+        }
+
+        document.getElementById('fetch-users-btn').addEventListener('click', async () => {
+            const res = await fetch(`${apiUrl}/admin/users`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${authToken}` },
+            });
+            const data = await res.json();
+            document.getElementById('user-management').innerHTML = data.map(user =>
+                `<div>User ID: ${user._id} - ${user.email}</div>`
+            ).join('');
+        });
+
+        document.getElementById('fetch-all-tasks-btn').addEventListener('click', async () => {
+            const res = await fetch(`${apiUrl}/admin/tasks`, {
+                method: 'GET',
+                headers: { 'Authorization': `Bearer ${authToken}` },
+            });
+            const data = await res.json();
+            document.getElementById('task-management').innerHTML = data.map(task =>
+                `<div>Task ID: ${task._id} - ${task.title} - ${task.status}</div>`
+            ).join('');
+        });
+
+        function displayResponse(data) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = data.message || JSON.stringify(data, null, 2);
+        }
+    </script>
+</body>
+
+
+</html>

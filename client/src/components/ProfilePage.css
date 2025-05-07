@@ -1,0 +1,162 @@
+.profile-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: #000; /* Dark background for the page */
+    color: white;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+  }
+  
+  .background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Keep the background behind the content */
+  }
+  
+  .profile-content {
+    position: relative;
+    z-index: 1;
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Darker semi-transparent background */
+    border-radius: 15px; /* Slightly more rounded corners */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* Soft shadow for a floating effect */
+    backdrop-filter: blur(10px); /* Blurring the background slightly */
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .profile-content:hover {
+    transform: translateY(-10px); /* Slight hover effect for profile content */
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.7); /* Enhanced shadow on hover */
+  }
+  
+  h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: center;
+    color: #FFD700; /* Golden color for the heading */
+    margin-bottom: 30px;
+  }
+  
+  .profile-details {
+    margin-top: 20px;
+  }
+  
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-field {
+    margin-bottom: 20px;
+  }
+  
+  .profile-field strong {
+    font-weight: 600;
+    color: #FFC107; /* Light amber color for labels */
+  }
+  
+  .profile-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    margin-top: 8px;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background-color: #222;
+    color: white;
+    transition: border-color 0.3s ease;
+  }
+  
+  .profile-input:focus {
+    border-color: #FF9800; /* Orange color on focus */
+    outline: none;
+    background-color: #333; /* Slightly darker on focus */
+  }
+  
+  .profile-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .submit-button, .edit-button, .delete-button {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+  }
+  
+  .edit-button {
+    background-color: #FF9800;
+    color: white;
+    border: none;
+  }
+  
+  .delete-button {
+    background-color: #F44336;
+    color: white;
+    border: none;
+  }
+  
+  .submit-button:hover, .edit-button:hover, .delete-button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+  
+  .submit-button:active, .edit-button:active, .delete-button:active {
+    transform: translateY(1px); /* Slight push effect when clicked */
+  }
+  
+  .delete-button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .submit-button:focus, .edit-button:focus, .delete-button:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.8); /* Subtle glow effect */
+  }
+  
+  .profile-actions button {
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .profile-actions button:hover {
+    transform: scale(1.05); /* Hover effect for buttons */
+  }
+  
+  /* Add animation for loading indicator */
+  .delete-button[disabled] {
+    position: relative;
+    pointer-events: none;
+  }
+  
+  .delete-button[disabled]::after {
+    content: 'Loading...';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+  }
+  

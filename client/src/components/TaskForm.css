@@ -1,0 +1,85 @@
+.task-form-container {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    overflow: auto;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    margin-top: 10px;
+   
+  }
+  
+  .odette-scene-wrapper {
+    position: absolute;
+    inset: 0;
+    left: -200px;
+    z-index: 0;
+  }
+  
+  .form-overlay {
+    position: relative;
+    padding: 30px;
+    z-index: 2;
+    color: white;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .form-overlay h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:disabled {
+    cursor: not-allowed;
+  }
+  
+  /* ✅ Responsive CSS */
+  @media screen and (max-width: 768px) {
+    .form-overlay {
+      padding: 50px;
+      padding-left: 20px;
+    }
+  
+    .odette-scene-wrapper {
+      left: 0;
+      
+    }
+    .task-form-container {
+      
+        margin-top: -1px;
+      }
+  }
+
+  
