@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with a dynamic base URL, defaulting to localhost
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api',  // Use environment variable or fallback to localhost
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'https://task-v4ip.onrender.com//api',  // Use environment variable or fallback to localhost
   headers: {
     'Content-Type': 'application/json',
     'Cache-Control': 'no-cache',  // Disable caching for all requests

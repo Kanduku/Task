@@ -117,41 +117,52 @@ export default function TaskList() {
   <div key={task._id} className={styles.card}>
     {editingTaskId === task._id ? (
       <>
-        <input
-          type="text"
-          name="title"
-          value={editFormData.title}
-          onChange={handleChange}
-          placeholder="Title"
-        />
-        <textarea
-          name="description"
-          value={editFormData.description}
-          onChange={handleChange}
-          placeholder="Description"
-        />
-        <input
-          type="text"
-          name="status"
-          value={editFormData.status}
-          onChange={handleChange}
-          placeholder="Status"
-        />
-        <input
-          type="text"
-          name="priority"
-          value={editFormData.priority}
-          onChange={handleChange}
-          placeholder="Priority"
-        />
-        <div className={styles.buttonGroup}>
-          <button onClick={() => handleSaveEdit(task._id)} className={styles.editButton}>
-            Save
-          </button>
-          <button onClick={handleCancelEdit} className={styles.deleteButton}>
-            Cancel
-          </button>
-        </div>
+      <input
+  type="text"
+  name="title"
+  value={editFormData.title}
+  onChange={handleChange}
+  placeholder="Title"
+/>
+
+<textarea
+  name="description"
+  value={editFormData.description}
+  onChange={handleChange}
+  placeholder="Description"
+/>
+
+<label>Status:</label>
+<select
+  name="status"
+  value={editFormData.status}
+  onChange={handleChange}
+>
+  <option value="Pending">Pending</option>
+  <option value="In Progress">In Progress</option>
+  <option value="Completed">Completed</option>
+</select>
+
+<label>Priority:</label>
+<select
+  name="priority"
+  value={editFormData.priority}
+  onChange={handleChange}
+>
+  <option value="Low">Low</option>
+  <option value="Medium">Medium</option>
+  <option value="High">High</option>
+</select>
+
+<div className={styles.buttonGroup}>
+  <button onClick={() => handleSaveEdit(task._id)} className={styles.editButton}>
+    Save
+  </button>
+  <button onClick={handleCancelEdit} className={styles.deleteButton}>
+    Cancel
+  </button>
+</div>
+
       </>
     ) : (
       <>

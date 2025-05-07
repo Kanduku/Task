@@ -9,7 +9,7 @@ import UserProfile from './components/UserProfile';
 import Navbar from './components/Navbar';
 import NotFound from './components/NotFound';
 import Loading from './components/Loading';
-import GLBViewer from './components/GLBViewer';
+
 // Create a PrivateRoute component
 const PrivateRoute = () => {
   const isLoggedIn = !!getToken();
