@@ -67,6 +67,13 @@
     height: 22px;
     cursor: pointer;
     z-index: 3;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      #333,         /* dark stripe color */
+      #333 4px,     /* stripe thickness */
+      transparent 4px,
+      transparent 6px  /* spacing between stripes */
+    );
   }
   
   .hamburger .bar {
@@ -143,4 +150,4 @@
       display: block;
     }
   }
-  
+ 
